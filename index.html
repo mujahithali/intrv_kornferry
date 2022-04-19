@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/intrv_kornferry/js/jquery.min.js"></script>
+    <script src="/intrv_kornferry/js/employeeDetails.js"></script>
+</head>
+
+<body>
+
+    <main>
+        <script>
+            let inputVal = "";
+            let getEmployeeDetails = () => {
+                inputVal = $("#id_inputId").val();
+                getDetails(emplyJsonObj);
+            };
+
+            let getDetails = (inputObj) => {
+
+                let getDetailsEx = (val) => {
+                    if (val["employeeId"] && val["employeeId"] == inputVal) {
+                        $("#id_employeeDetails").html(`${val["employeeId"]}: ${val["firstName"]} ${val["lastName"]}`);
+                        return false;
+                    }
+                    else {
+                        if (val["myTeam"])
+                            getDetails(val["myTeam"]);
+                    }
+                }
+
+                inputObj.find(getDetailsEx);
+            }
+
+            let seeEmployeeList = () => {
+                $("#id_employeeList code").load("/intrv_kornferry/js/employeeDetails.js");
+            }
+        </script>
+
+
+        <h2><u>Get Employee Details</u></h2>
+        <input type="text" id="id_inputId" value="" placeholder="employee ID" />
+        <button onclick="getEmployeeDetails()">Get Employee Details</button>
+        <br /><br />
+        <h3 id="id_employeeDetails"></h3>
+        <hr />
+        <button onclick="seeEmployeeList()">Show Employee List</button>
+        <br /><br />        
+        <div id="id_employeeList"><pre><code></code></pre></div>
+
+    </main>
+</body>
+</html>
